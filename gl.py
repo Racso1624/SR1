@@ -18,10 +18,10 @@ def setColor(r, b, g):
 class Render(object):
 
     def __init__(self):
-        self.width = None
-        self.height = None
-        self.clearColor = None
-        self.render_color = None
+        self.width = 0
+        self.height = 0
+        self.clear_color = setColor(1, 1, 1)
+        self.render_color = setColor(0, 0, 0)
         self.viewport_x = 0
         self.viewport_y = 0
         self.viewport_height = 0
@@ -36,11 +36,11 @@ class Render(object):
         self.width = width
         self.height = height
 
-        self.framebuffer = [[self.clearColor for y in range(self.height)]
-        for x in range(self.width)]
+        self.framebuffer = [[self.clear_color for x in range(self.width)]
+        for y in range(self.height)]
 
     def glClearColor(self, r, g, b):
-        self.clearColor = setColor(r, g, b)
+        self.clear_color = setColor(r, g, b)
         
         for x in range(self.viewport_x, self.viewport_x + self.viewport_width + 1):
             for y in range(self.viewport_y, self.viewport_y + self.viewport_height + 1):
@@ -56,17 +56,13 @@ class Render(object):
         self.viewport_width = width
 
     def glVertex(self, x, y):
-        if -1 <= x <= 1:
-            if -1 <= y <= 1:
-                pass
-            else:
-                y = 0
+        if x > 1 or x < -1 or y > 1 or y < -1:
+            print('Error')
         else:
-            x = 0
+            x = int((x + 1) * (self.viewport_width / 2) + self.viewport_x)
+            y = int((y + 1) * (self.viewport_height / 2) + self.viewport_y)
 
-        self.x_pixel = int((x + 1) * self.viewport_width * 1/2) * self.viewport_x
-        self.y_pixel = int((y + 1) * self.viewport_height * 1/2) * self.viewport_y
-        self.glPoint(self.x_pixel, self.y_pixel)
+            self.glPoint(x, y)
 
     def glPoint(self, x, y):
         self.framebuffer[y][x] = self.render_color

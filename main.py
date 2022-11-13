@@ -4,12 +4,12 @@ r = Render()
 
 r.glCreateWindow(100, 100)
 
-r.glViewPort(20, 20, 50, 50)
+r.glViewPort(25, 25, 30, 30)
 
-r.glClearColor(0.2, 0.4, 0.6)
+r.glClearColor(0.2, 0.8, 0.6)
 
 r.glClear()
 
 r.glVertex(1, 1)
 
-r.glFinish("a.bmp")
+r.glFinish("punto.bmp")
