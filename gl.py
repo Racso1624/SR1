@@ -28,23 +28,22 @@ class Render(object):
         self.viewport_width = 0
 
     def glClear(self):
-        for x in range(self.viewport_x, self.viewport_x + self.viewport_width):
-            for y in range(self.viewport_y, self.viewport_y + self.viewport_height):
-                self.glPoint(x,y)
+        self.framebuffer = [[self.clear_color for x in range(self.width)]
+        for y in range(self.height)]
 
     def glCreateWindow(self, width, height):
         self.width = width
         self.height = height
-
-        self.framebuffer = [[self.clear_color for x in range(self.width)]
-        for y in range(self.height)]
+        
 
     def glClearColor(self, r, g, b):
         self.clear_color = setColor(r, g, b)
-        
+
+    def glClearViewport(self):
         for x in range(self.viewport_x, self.viewport_x + self.viewport_width + 1):
             for y in range(self.viewport_y, self.viewport_y + self.viewport_height + 1):
-                self.glPoint(x,y)
+                self.glPoint(x,y)    
+        
 
     def glColor(self, r, g, b):
         self.render_color = setColor(r, g, b)
@@ -97,4 +96,3 @@ class Render(object):
                 f.write(self.framebuffer[x][y])
 
         f.close()
-
