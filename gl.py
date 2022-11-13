@@ -64,10 +64,10 @@ class Render(object):
             x = int((x + 1) * (self.viewport_width / 2) + self.viewport_x)
             y = int((y + 1) * (self.viewport_height / 2) + self.viewport_y)
 
-            self.glPoint(x, y, self.render_color)
+            self.glPoint(x, y)
 
-    def glPoint(self, x, y, color):
-        self.framebuffer[x][y] = color
+    def glPoint(self, x, y, color = None):
+        self.framebuffer[x][y] = color or self.render_color
 
     def glFinish(self, filename):
         f = open(filename, 'bw')
